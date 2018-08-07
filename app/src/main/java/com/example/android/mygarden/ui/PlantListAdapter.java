@@ -62,7 +62,7 @@ public class PlantListAdapter extends RecyclerView.Adapter<PlantListAdapter.Plan
     @Override
     public void onBindViewHolder(PlantViewHolder holder, int position) {
 
-        if (mCursor != null) {
+        if ((mCursor != null) && !mCursor.isClosed()) {
             mCursor.moveToPosition(position);
             int idIndex = mCursor.getColumnIndex(PlantEntry._ID);
             int createTimeIndex = mCursor.getColumnIndex(PlantEntry.COLUMN_CREATION_TIME);
