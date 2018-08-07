@@ -19,8 +19,6 @@ public class PlantWidgetInfo extends AppWidgetProvider {
 
 //        CharSequence widgetText = context.getString(R.string.appwidget_text);
 //        views.setTextViewText(R.id.appwidget_text, widgetText);
-        // Construct the RemoteViews object  // We are using an Image instead
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.plant_widget_info);
 
         // Create intent to launch MainActivity when clicked
         Intent intent = new Intent(context, MainActivity.class);
@@ -28,10 +26,12 @@ public class PlantWidgetInfo extends AppWidgetProvider {
         // Widgets allow click handlers to launch only PendingIntents
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
-        views.setOnClickPendingIntent(views.getLayoutId(), pendingIntent);
+        // Construct the RemoteViews object  // We are using an Image instead
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.plant_widget_info);
+        views.setOnClickPendingIntent(R.id.widget_plant_image, pendingIntent);
 
         // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(R.id.widget_plant_image, views);
+        appWidgetManager.updateAppWidget(appWidgetId, views);  // appWidgetId was passed in
     }
 
     @Override
