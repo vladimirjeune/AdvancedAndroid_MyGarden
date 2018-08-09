@@ -21,7 +21,6 @@
 
         <!-- TODO (2): Create a plant watering service that extends IntentService and supports the
         action ACTION_WATER_PLANTS which updates last_watered timestamp for all plants still alive -->
-        <!-- TODO (3): Add a service tag for PlantWateringService -->
 
         <provider
             android:name=".provider.PlantContentProvider"
@@ -42,6 +41,11 @@
         <activity
             android:name=".ui.AddPlantActivity"
             android:label="@string/title_activity_add_plant" />
+
+        <!-- TODO (3): Add a service tag for PlantWateringService -->
+        <service
+            android:name=".PlantWateringService"
+            />
     </application>
 
 </manifest>

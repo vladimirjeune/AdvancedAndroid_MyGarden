@@ -39,8 +39,34 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.widget_plant_image, pendingIntent);
         // TODO (4): Create a PendingIntent for the PlantWateringService and setOnClickPendingIntent for widget_water_button
         // Instruct the widget manager to update the widget
+        setWaterClickHandler(context, views);
+
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+
     }
+
+
+    /**
+     * SETWATERCLICKHANDLER - create a PendingIntent to handle the click event on the
+     * water drop image, this time however launching a service instead of an activity
+     * @param context - Needed to access correct functions
+     * @param views - Allows us to access Widget's views.  Because Widgets are different
+     */
+    private static void setWaterClickHandler(Context context, RemoteViews views) {
+        // Add watering Service Click Handler to raindrop
+        Intent wateringIntent = new Intent(context, PlantWateringService.class);
+        // Need to set the action
+        wateringIntent.setAction(PlantWateringService.ACTION_WATER_PLANTS);
+        PendingIntent waterPendingIntent = PendingIntent.getService(
+                context,
+                0,
+                wateringIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        views.setOnClickPendingIntent(R.id.iv_widget_water_drop_blue, waterPendingIntent);
+    }
+
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
