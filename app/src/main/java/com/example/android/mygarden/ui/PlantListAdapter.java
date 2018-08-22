@@ -62,23 +62,25 @@ public class PlantListAdapter extends RecyclerView.Adapter<PlantListAdapter.Plan
     @Override
     public void onBindViewHolder(PlantViewHolder holder, int position) {
 
-        mCursor.moveToPosition(position);
-        int idIndex = mCursor.getColumnIndex(PlantEntry._ID);
-        int createTimeIndex = mCursor.getColumnIndex(PlantEntry.COLUMN_CREATION_TIME);
-        int waterTimeIndex = mCursor.getColumnIndex(PlantEntry.COLUMN_LAST_WATERED_TIME);
-        int plantTypeIndex = mCursor.getColumnIndex(PlantEntry.COLUMN_PLANT_TYPE);
+        if (mCursor != null && !mCursor.isClosed() && mCursor.getCount() > 0) {
+            mCursor.moveToPosition(position);
+            int idIndex = mCursor.getColumnIndex(PlantEntry._ID);
+            int createTimeIndex = mCursor.getColumnIndex(PlantEntry.COLUMN_CREATION_TIME);
+            int waterTimeIndex = mCursor.getColumnIndex(PlantEntry.COLUMN_LAST_WATERED_TIME);
+            int plantTypeIndex = mCursor.getColumnIndex(PlantEntry.COLUMN_PLANT_TYPE);
 
-        long plantId = mCursor.getLong(idIndex);
-        int plantType = mCursor.getInt(plantTypeIndex);
-        long createdAt = mCursor.getLong(createTimeIndex);
-        long wateredAt = mCursor.getLong(waterTimeIndex);
-        long timeNow = System.currentTimeMillis();
+            long plantId = mCursor.getLong(idIndex);
+            int plantType = mCursor.getInt(plantTypeIndex);
+            long createdAt = mCursor.getLong(createTimeIndex);
+            long wateredAt = mCursor.getLong(waterTimeIndex);
+            long timeNow = System.currentTimeMillis();
 
-        int imgRes = PlantUtils.getPlantImageRes(mContext, timeNow - createdAt, timeNow - wateredAt, plantType);
+            int imgRes = PlantUtils.getPlantImageRes(mContext, timeNow - createdAt, timeNow - wateredAt, plantType);
 
-        holder.plantImageView.setImageResource(imgRes);
-        holder.plantNameView.setText(String.valueOf(plantId));
-        holder.plantImageView.setTag(plantId);
+            holder.plantImageView.setImageResource(imgRes);
+            holder.plantNameView.setText(String.valueOf(plantId));
+            holder.plantImageView.setTag(plantId);
+        }
     }
 
     public void swapCursor(Cursor newCursor) {
